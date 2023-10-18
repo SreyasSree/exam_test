@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<section style="text-align: center;">
+<div class="x_1">
+  <img src="{% static 'img/MERCURY LOGO.pdf (5).png' %}" width="250" alt="logo" style="width: 100%;">
+</div>
+  <h1>Question ({{ question.id }}) {{ question_count }}/{{ total_questions }}: {{ question.question_text }}</h1>
+<h1 id="timer">30</h1>
+  <form method="post">
+    {% csrf_token %}
+    {% for choice in question.answer_choices %}
+    <div class="x_0">
+      <input type="radio" name="answer" value="{{ choice }}" id="choice_{{choice}}" style="display: none;">
+      <label for="choice_{{choice}}" class="abc">
+        <div class="i_0"></div>
+        <div class="i_1"></div>
+        <div class="i_2"></div>
+        {{ choice }}<br>
+      </label>
+    </div>
+    {% endfor %}
+    {% if question_count == 10 %}
+    <button type="submit" id="submit">Submit</button>
+    {% else %}
+    <button type="submit" id="submit">Next</button>
+    {% endif %}
+  </form>
+</section>
+<div class="x_2">
+  <div style="text-decoration: none;">
+    <p>6 മാസം കൊണ്ട് IT മേഖലയിൽ ഒരു ജോലി</p>
+    <p>Contact Now : 8848 4978 06</p>
+  </div>
+</div>
+
+
+  <script>
+    var timerElement = document.getElementById('timer');
+    var submitButton = document.getElementById('submit');
+    var countdown = 30;
+    var countdownTimer;
+  
+    // Function to start the countdown timer
+    function startCountdown() {
+      countdownTimer = setInterval(updateCountdown, 1000);
+    }
+  
+    // Function to update the countdown timer
+    function updateCountdown() {
+      countdown--;
+      timerElement.textContent = countdown;
+  
+      if (countdown <= 0) {
+        clearInterval(countdownTimer);
+        submitButton.click(); // Automatically click the submit button
+      }
+    }
+  
+    // Start the countdown when the page loads
+    startCountdown();
+  
+    // Restart the countdown when the submit button is clicked
+    submitButton.addEventListener('click', function() {
+      countdown = 30;
+      timerElement.textContent = countdown;
+      clearInterval(countdownTimer);
+      startCountdown();
+    });
+  </script>
+
+
+{% endblock %}
+

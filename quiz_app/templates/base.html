@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz App</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script src="https://kit.fontawesome.com/b08614ab99.js" crossorigin="anonymous"></script>
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicon/favicon_package_v0.16 (1)/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon/favicon_package_v0.16 (1)/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon/favicon_package_v0.16 (1)/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'img/favicon/favicon_package_v0.16 (1)/site.webmanifest' %}">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+  {% block content %}{% endblock %}
+</body>
+<script>
+    document.oncontextmenu = function() {
+        return false;
+    };
+</script>
+  <script>
+    // Listen for screenshot events (not supported in all browsers)
+    document.addEventListener('keyup', function (e) {
+      if (e.key === 'PrintScreen' || (e.key === 'Shift' && e.key === 'S')) {
+        alert('Screenshots are not allowed on this page.');
+      }
+    });
+
+    // Listen for the right-click context menu (not supported in all browsers)
+    window.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+      alert('Right-click context menu is disabled.');
+    });
+  </script>
+</html>
+

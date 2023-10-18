@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+{% if limit.count >= 200 %}
+<h1 class="a_1_1">Limit Has Reached</h1>
+{% else %}
+<div class="logo-img">
+  <img src="{% static 'img/MERCURY LOGO.pdf (5).png' %}" width="250" alt="logo">
+</div>
+  <form method="post" class="a_2_2">
+    {% csrf_token %}
+    {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }} a_2_3"{% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    <div class="a_2_1">{{ form.name }}</div>
+    <div class="a_2_1">{{ form.phone_number }}</div>
+    
+    <button type="submit" style="display: none;" id="start">Start Quiz</button>
+    <label for="start">
+      <div class="buttons-app">
+        <div class="wrapper">
+       <a class="link">
+         <div class="color"></div>
+         <span class="t_1">Let's do it</span>
+         <i class="fa-solid fa-arrow-right"></i>
+       </a>
+       </div>
+         </div>
+    </label>
+  </form>
+  <ul class="arrow-list">
+    <li>//////////////////////</li>
+    <li>//////////////////////</li>
+  </ul>
+{% endif %}
+{% endblock %}
+

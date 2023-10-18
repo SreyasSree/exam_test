@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Admin Dashboard</h1>
+
+  <!-- Add download buttons -->
+  <a href="{% url 'export_participants_xlsx' %}" class="btn btn-primary">Download Participants Data (Excel)</a>
+  <a href="{% url 'export_participants_pdf' %}" class="btn btn-primary">Download Participants Data (PDF)</a>
+
+{% endblock %}

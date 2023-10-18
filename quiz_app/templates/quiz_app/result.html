@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+    <div class="logo-img">
+      <img src="{% static 'img/MERCURY LOGO.pdf (5).png' %}" width="250" alt="logo">
+    </div>
+    
+  
+      {% if won_gift %}
+      <div class="main-div flex">
+  
+      <div class="s_1">
+        <img src="{% static 'img/win.png' %}" alt="">
+      </div>
+  
+      <div class="s_2">
+        <div class="s_3"><h1>Congratulations</h1></div>
+        <h1>You Won The</h1>
+        <h1 style="color: rgba(128, 0, 0, 1); font-size: 50px;">മുഹബ്ബത്ത്</h1>
+        <h1>&lt;| BE A DEVELOPER&gt;</h1>
+      </div>
+  
+      </div>
+      
+      {% else %}
+      <div class="main-div a_1">
+  
+        <div class="a_2">
+          <h1>FAILED</h1>
+        </div>
+  
+        <h1>But,</h1>
+  
+        <div class="a_3">
+          <h2>
+            Never give up on your <span>DREAMS</span>, <br>  NO matter how many times you <br> FAIL
+          </h2>
+        </div>
+  
+  
+      </div>
+      {% endif %}
+  
+
+
+
+{% endblock %}
+

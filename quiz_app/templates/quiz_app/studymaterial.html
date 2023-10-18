@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="logo-img">
+  <img src="{% static 'img/MERCURY LOGO.pdf (5).png' %}" width="250" alt="logo">
+</div>
+
+    <!-- List of PDF files -->
+    <ul>
+        {% for pdf_file in pdf %}
+        <li class="z_1" ><a class="z_1_1" href="{{ pdf_file.pdf_file.url }}" onclick="showPdfViewer('{{ pdf_file.pdf_file.url }}')">{{ pdf_file.name }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <!-- PDF Viewer iframe -->
+    <iframe id="pdf-viewer" name="pdf-frame" src=""></iframe>
+
+    <!-- Overlay to dim the background when the iframe is displayed -->
+    <div id="pdf-overlay"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+    <script>
+        function showPdfViewer(pdfUrl) {
+            // Display the overlay and iframe
+            document.getElementById("pdf-overlay").style.display = "block";
+            document.getElementById("pdf-viewer").style.display = "block";
+
+            // Set the iframe source to the clicked PDF URL
+            document.getElementById("pdf-viewer").src = pdfUrl;
+
+            // Use PDF.js to render PDFs in the iframe (your PDF rendering code here)
+        }
+    </script>
+{% endblock %}
+
