@@ -16,7 +16,7 @@ from django.conf import settings
 
 
 def index(request):
-    limit = Limit.objects.first()
+#    limit = Limit.objects.first()
 
 
     if request.method == 'POST':
@@ -31,7 +31,7 @@ def index(request):
     else:
         form = ParticipantForm()
 
-    return render(request, 'quiz_app/index.html', {'form': form,'limit':limit})
+    return render(request, 'quiz_app/index.html', {'form': form})
 
 def quiz(request):
     if 'participant_id' not in request.session:
@@ -96,33 +96,38 @@ def result(request):
         return redirect('index')
 
     participant = Participant.objects.get(id=request.session['participant_id'])
+    
+    quiz = Question.objects.all()
+    
     context = {
         'score': participant.score,
-        'won_gift': participant.score >= 7
+        'won_gift': participant.score >= 15,
+        'answers' : participant.answers,
+        'quiz' : quiz
     }
 
 
-    if participant.score >= 7:
-        subject = "Price has won"
-        message = f"\n\nName: {participant.name}\nScore: {participant.score}\nPhone: {participant.phone_number}"
-        from_email = settings.DEFAULT_FROM_EMAIL
-        recipient_list = ["sreyaslove@gmail.com","podapattee007@gmail.com","saravanansvanas426@gmail.com"]
-        send_mail(subject, message, from_email, recipient_list)
-    else:
-        subject = "Sorry, he lost"
-        message = f"\n\nName: {participant.name}\nScore: {participant.score}\nPhone: {participant.phone_number}"
-        from_email = settings.DEFAULT_FROM_EMAIL
-        recipient_list = ["sreyaslove@gmail.com","podapattee007@gmail.com","saravanansvanas426@gmail.com"]
-        send_mail(subject, message, from_email, recipient_list)
+#    if participant.score >= 7:
+#        subject = "Price has won"
+#        message = f"\n\nName: {participant.name}\nScore: {participant.score}\nPhone: {participant.phone_number}"
+#        from_email = settings.DEFAULT_FROM_EMAIL
+#        recipient_list = ["sreyaslove@gmail.com","podapattee007@gmail.com","saravanansvanas426@gmail.com"]
+#        send_mail(subject, message, from_email, recipient_list)
+#    else:
+#        subject = "Sorry, he lost"
+#        message = f"\n\nName: {participant.name}\nScore: {participant.score}\nPhone: {participant.phone_number}"
+#        from_email = settings.DEFAULT_FROM_EMAIL
+#        recipient_list = ["sreyaslove@gmail.com","podapattee007@gmail.com","saravanansvanas426@gmail.com"]
+#        send_mail(subject, message, from_email, recipient_list)
 
-    limit = Limit.objects.first()
+    #limit = Limit.objects.first()
 
-    if limit.count >= 100:
-        subject = "Limit has Reached"
-        message = f"The total limit of Participants has reached"
-        from_email = settings.DEFAULT_FROM_EMAIL
-        recipient_list = ["sreyaslove@gmail.com","podapattee007@gmail.com","saravanansvanas426@gmail.com"]
-        send_mail(subject, message, from_email, recipient_list)
+    #if limit.count >= 100:
+        #subject = "Limit has Reached"
+        #message = f"The total limit of Participants has reached"
+        #from_email = settings.DEFAULT_FROM_EMAIL
+        #recipient_list = ["sreyaslove@gmail.com","podapattee007@gmail.com","saravanansvanas426@gmail.com"]
+        #send_mail(subject, message, from_email, recipient_list)
 
     request.session.flush()
     return render(request, 'quiz_app/result.html', context)

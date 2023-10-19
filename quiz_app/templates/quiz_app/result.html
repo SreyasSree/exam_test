@@ -14,14 +14,13 @@
       <div class="main-div flex">
   
       <div class="s_1">
-        <img src="{% static 'img/win.png' %}" alt="">
+        <img src="{% static 'img/MERCURY LOGO.pdf (6).png' %}" alt="">
       </div>
   
       <div class="s_2">
         <div class="s_3"><h1>Congratulations</h1></div>
-        <h1>You Won The</h1>
-        <h1 style="color: rgba(128, 0, 0, 1); font-size: 50px;">മുഹബ്ബത്ത്</h1>
-        <h1>&lt;| BE A DEVELOPER&gt;</h1>
+        <h1>You Won</h1>
+        <h1>Your score is {{ score }} / 30</h1>
       </div>
   
       </div>
@@ -33,20 +32,71 @@
           <h1>FAILED</h1>
         </div>
   
-        <h1>But,</h1>
-  
-        <div class="a_3">
-          <h2>
-            Never give up on your <span>DREAMS</span>, <br>  NO matter how many times you <br> FAIL
-          </h2>
-        </div>
-  
-  
+        <h1>Your score is {{ score }} / 30</h1>
       </div>
       {% endif %}
   
 
+      <div class="main-div a_1">
+      
+      <h1>Correct Answers</h1>
+      
+      <table>
+	  <tr>
+	  <th>Id</th>
+	  <th>Question</th>
+	  <th>Answer</th>
+	  </tr>
+	  {% for exam in quiz %}
+	  <tr>
+	  <td>{{ exam.id }}</td>
+	  <td>{{ exam.question_text }}</td>
+	  <td>{{ exam.correct_answer }}</td>
+	  </tr>
+	  {% endfor %}
+      </table>
+      
+      </div>
+      
+      
+      <div class="main-div a_1">
+      
+      <h1>Selected Answers</h1>
+      
+      <table>
+	  <tr>
+	  <th>Id</th>
+	  <th>Answer</th>
+	  </tr>
+	  {% if answers %}
+            {% for key, value in answers.items %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="2">No answers available</td>
+            </tr>
+        {% endif %}
+
+      </table>
+      
+      </div>
 
 
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
 

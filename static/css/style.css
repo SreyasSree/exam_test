@@ -1084,7 +1084,7 @@ input[type="radio"]:checked ~ .bullet .line.seven {
 .s_3{
     background-color: rgba(0, 26, 117, 1);
     color: white;
-    padding: 5px;
+    padding: 5px 50px;
     border-radius: 35px;
 }
 
@@ -1096,7 +1096,7 @@ input[type="radio"]:checked ~ .bullet .line.seven {
 .a_1{
     text-align: center;
     color: rgba(0, 26, 117, 1);
-    margin-top: 50px;
+    margin-bottom: 50px;
 }
   
 .a_2{
@@ -1170,3 +1170,17 @@ input[type="radio"]:checked ~ .bullet .line.seven {
 }
 
 
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #D6EEEE;
+}
