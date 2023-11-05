@@ -1,37 +1,45 @@
 from django.shortcuts import render, redirect
 from .models import Question, Participant, Limit , PDF
-from .forms import ParticipantForm
+from .forms import UserLoginForm
 import random
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from openpyxl import Workbook
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from django.contrib import messages
-
+from django.urls import reverse
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth import authenticate, login
 
 
 
 def index(request):
-#    limit = Limit.objects.first()
-
-
     if request.method == 'POST':
-        form = ParticipantForm(request.POST)
-        if form.is_valid():
-            participant = form.save()
-            request.session['participant_id'] = participant.id
-            return redirect('quiz')
-        else:
-            if 'phone_number' in form.errors:
-                messages.error(request, 'There is an error in the Number you used.')
-    else:
-        form = ParticipantForm()
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
 
-    return render(request, 'quiz_app/index.html', {'form': form})
+        if user is not None:
+            login(request, user)
+
+            # Check if a 'Participant' object already exists for the user
+            participant, created = Participant.objects.get_or_create(user=user)
+
+            if created:
+                request.session['participant_id'] = participant.id  # Store Participant's id in session
+                return redirect('quiz')  # Redirect to the quiz page after login
+            else:
+                messages.error(request, 'Already attended.')  # Participant already exists
+        else:
+            messages.error(request, 'Invalid username or password. Please try again.')
+
+    # If the request is not POST, render the sign-in page
+    return render(request, 'quiz_app/index.html')
+    
+
 
 def quiz(request):
     if 'participant_id' not in request.session:
@@ -120,14 +128,7 @@ def result(request):
 #        recipient_list = ["sreyaslove@gmail.com","podapattee007@gmail.com","saravanansvanas426@gmail.com"]
 #        send_mail(subject, message, from_email, recipient_list)
 
-    #limit = Limit.objects.first()
 
-    #if limit.count >= 100:
-        #subject = "Limit has Reached"
-        #message = f"The total limit of Participants has reached"
-        #from_email = settings.DEFAULT_FROM_EMAIL
-        #recipient_list = ["sreyaslove@gmail.com","podapattee007@gmail.com","saravanansvanas426@gmail.com"]
-        #send_mail(subject, message, from_email, recipient_list)
 
     request.session.flush()
     return render(request, 'quiz_app/result.html', context)

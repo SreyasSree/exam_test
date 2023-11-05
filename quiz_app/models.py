@@ -3,6 +3,7 @@ import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.auth.models import User
 
 
 
@@ -19,13 +20,18 @@ class Question(models.Model):
         return self.question_text
 
 class Participant(models.Model):
-    name = models.CharField(max_length=200)
-    phone_number = models.CharField(max_length=15,unique=True)
     score = models.IntegerField(default=0)
+    id = models.CharField(max_length=50, primary_key=True)
     answers = models.JSONField(blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
+    
+    def save(self, *args, **kwargs):
+        # Set the 'id' field of Participant to match the 'id' of the associated User
+        self.id = self.user.id
+        super(Participant, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
+        return self.user.username
 
 
 class Limit(models.Model):

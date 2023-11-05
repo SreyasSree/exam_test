@@ -3,7 +3,7 @@ from .models import Question, Participant , Limit , PDF
 from .admin_actions import export_participants_xlsx, export_participants_pdf
 
 class ParticipantAdmin(admin.ModelAdmin):
-    list_display = ('name', 'phone_number', 'score')
+    list_display = ('user', 'answers', 'score')
     actions = [export_participants_xlsx, export_participants_pdf]
 
 admin.site.register(Question)

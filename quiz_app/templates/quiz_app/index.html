@@ -9,7 +9,7 @@
 <div class="logo-img">
   <img src="{% static 'img/MERCURY LOGO.pdf (5).png' %}" width="250" alt="logo">
 </div>
-  <form method="post" class="a_2_2">
+  <form method="POST" class="a_2_2">
     {% csrf_token %}
     {% if messages %}
         <ul class="messages">
@@ -18,8 +18,8 @@
           {% endfor %}
         </ul>
       {% endif %}
-    <div class="a_2_1">{{ form.name }}</div>
-    <div class="a_2_1">{{ form.phone_number }}</div>
+    <div class="a_2_1"><input type="text" name="username" maxlength="150" required="" id="id_username" placeholder="Username"></div>
+    <div class="a_2_1"><input type="password" name="password" required="" id="id_password" placeholder="********"></div>
     
     <button type="submit" style="display: none;" id="start">Start Quiz</button>
     <label for="start">
